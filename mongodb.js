@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 require('dotenv').config();
 
 function connectToDatabase() {
-  mongoose.connect(process.env.DATABASE_URL, {
+  mongoose.connect("mongodb+srv://khallil:mCev1xmRUzzNrSgn@cluster0.uopk9.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
