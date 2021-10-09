@@ -13,10 +13,11 @@ app.use(express.urlencoded({ extended: false}));
 app.use(express.json());
 
 //connect database mongodb
-connectToDatabase()
+connectToDatabase();
 
-
-
+app.use(express.json());
+app.use('/produtos', rotaProdutos);
+app.use('/pontos', rotaPontos);
 
 //CORS
 app.use((req, res, next) =>{
@@ -32,9 +33,6 @@ app.use((req, res, next) =>{
   }
   next();
 });
-app.use(express.json());
-app.use('/produtos', rotaProdutos);
-app.use('/pontos', rotaPontos);
 
 // Quando não encontra rota, entra aqui:
 app.use((req, res, next) => {
@@ -49,8 +47,8 @@ app.use((error, req, res, next) => {
     erro: {
       message: error.message
     }
-  })
-})
+  });
+});
 
 module.exports = app;
 
