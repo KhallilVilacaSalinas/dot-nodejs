@@ -1,9 +1,11 @@
 const mongoose = require("mongoose");
+require('dotenv').config();
 
 function connectToDatabase() {
   mongoose.connect(process.env.DATABASE_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useCreateIndex: true
   });
 
   const db = mongoose.connection;
