@@ -4,7 +4,7 @@ const express =  require('express');
 const app = express();
 const morgan =  require('morgan');
 
-const connectToDatabase = require("./database/index");
+const connectToDatabase = require("./mongodb");
 const rotaProdutos = require('./routes/produtos');
 const rotaPontos = require('./routes/pontos');
 
