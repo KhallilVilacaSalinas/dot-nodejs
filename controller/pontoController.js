@@ -38,15 +38,15 @@ module.exports = {
     }
   },
   async update( request, response) {
-    const {idUser, image, dateTile, dateTime} = request.body;
+    const {image, dateTile, dateTime} = request.body;
 
     if(!image || !dateTile|| !dateTime) {
-      return response.status(400).json({ error: "Você não informou nenhuma insformação."})
+      return response.status(400).json({ error: "Você não informou nenhuma informação."})
     }
 
-    if (image) request.ponto.image = image;
-    if (dateTile) request.ponto.dateTile = dateTile;
-    if (dateTime) request.ponto.dateTime = dateTime;
+    if (image) response.ponto.image = image;
+    if (dateTile) response.ponto.dateTile = dateTile;
+    if (dateTime) response.ponto.dateTime = dateTime;
 
     try {
       await response.video.save()
