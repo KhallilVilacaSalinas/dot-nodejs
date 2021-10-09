@@ -40,7 +40,7 @@ module.exports = {
   async update( request, response) {
     const {image, dateTile, dateTime} = request.body;
 
-    if(!image || !dateTile|| !dateTime) {
+    if(!image && !dateTile && !dateTime) {
       return response.status(400).json({ error: "Você não informou nenhuma informação."})
     }
 
