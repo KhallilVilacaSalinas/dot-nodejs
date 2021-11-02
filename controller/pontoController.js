@@ -1,8 +1,10 @@
-const {response} = require("express");
 const {v4: uuid} = require("uuid");
-const { update } = require("../models/Ponto");
 const Ponto = require("../models/Ponto");
 
+const multer =  require('multer');
+
+
+ 
 module.exports = {
   async index(request, response) {
     try {
@@ -14,23 +16,26 @@ module.exports = {
   },
 
   async store(request, response) {
-    const {idUser, image, dateTile, dateTime} = request.body;
-
+    const {idUser, image, dateTile, dateTime,} = request.body;
+    console.log(request.file)
     if( !idUser || !image ) {
       return  response.status(400).json({error: "Missing image."});
     }
+
 
     const video = new Ponto({ 
       _idComprovante: uuid(),
       idUser,
       dateTime,
       dateTile,
-      image,
+      image: idUser + request.file.path,
     });
+
+    // var id = video.idUser;
+    // exports.id =id;
 
     try {
       await video.save();
-
       return response.status(201).json({message: "video added succesfully!"});
 
     } catch (err) {
@@ -49,11 +54,22 @@ module.exports = {
     if (dateTime) response.ponto.dateTime = dateTime;
 
     try {
-      await response.video.save()
+      await response.ponto.save()
       return response.status(200).json({ message: "Ponto alterado com sucesso "})
     } catch (err) {
       return response.status(500).json({ error: err.message })
     }
-  }
+  },
 
+  async delete(request, response) {
+    try {
+      await response.ponto.remove()
+      return response.status(200).json({ message: "Ponto excluido com sucesso"})
+    } catch (err) {
+      return response.status(500).json({ error: err.message });
+    }
+  },
+
+  
 };
+

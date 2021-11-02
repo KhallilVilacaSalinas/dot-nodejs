@@ -9,6 +9,7 @@ const rotaProdutos = require('./routes/produtos');
 const rotaPontos = require('./routes/pontos');
 
 app.use(morgan('dev'))
+app.use('/uploads', express.static('uploads'))
 app.use(express.urlencoded({ extended: false}));
 app.use(express.json());
 
