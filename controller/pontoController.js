@@ -18,7 +18,7 @@ module.exports = {
   async store(request, response) {
     const {idUser, image, dateTile, dateTime,} = request.body;
     console.log(request.file)
-    if( !idUser || !image ) {
+    if( !idUser ) {
       return  response.status(400).json({error: "Missing image."});
     }
 
