@@ -10,13 +10,12 @@ const rotaPontos = require('./routes/pontos');
 
 app.use(morgan('dev'))
 app.use('/uploads', express.static('uploads'))
-app.use(express.urlencoded({ extended: false}));
-app.use(express.json());
+app.use(express.urlencoded({ limit: '50mb', extended: false}));
+app.use(express.json({limit: '50mb'}));
 
 //connect database mongodb
 connectToDatabase();
 
-app.use(express.json());
 app.use('/produtos', rotaProdutos);
 app.use('/pontos', rotaPontos);
 

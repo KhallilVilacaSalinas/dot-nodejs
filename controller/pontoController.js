@@ -1,10 +1,7 @@
-const {v4: uuid} = require("uuid");
+const { v4: uuid } = require("uuid");
 const Ponto = require("../models/Ponto");
+const fs = require('fs');
 
-const multer =  require('multer');
-
-
- 
 module.exports = {
   async index(request, response) {
     try {
@@ -15,38 +12,51 @@ module.exports = {
     }
   },
 
-  async store(request, response) {
-    const {idUser, image, dateTile, dateTime,} = request.body;
-    console.log(request.file)
-    if( !idUser ) {
-      return  response.status(400).json({error: "Missing image."});
+  async getId(request, response) {
+    const id = request.params.id;
+    const pontos = await Ponto.find({ idUser: id });
+    if (!pontos) {
+      return response.status(400).json({ error: "Você ainda não tem nenhum ponto." })
     }
+    return response.status(200).json({ pontos });
+  },
 
+  async store(request, response) {
+    const { idUser, image, dateTile, dateTime } = request.body;
+    //console.log(request.file)
+    console.log(request.image);
+    if (!idUser || !image) {
+      return response.status(400).json({ error: "Missing image." });
+    }
+    console.log(image.substr(0, 20));
 
-    const video = new Ponto({ 
+    fs.writeFile("./uploads/" + idUser + "_" + dateTime + ".jpeg", Buffer.from(image, 'base64'),  (err) => {
+      if(err) console.log(err)});
+    // fs.writeFile(idUser + dateTime, buff,  (err) => {
+    //   if(err) console.log(err)});
+
+    const video = new Ponto({
       _idComprovante: uuid(),
       idUser,
       dateTime,
       dateTile,
-      image: idUser + request.file.path,
+      image: "/uploads/" + idUser+ "_" + dateTime + ".jpeg",
     });
-
-    // var id = video.idUser;
-    // exports.id =id;
 
     try {
       await video.save();
-      return response.status(201).json({message: "video added succesfully!"});
+      return response.status(201).json({ message: "video added succesfully!" });
 
     } catch (err) {
-      response.status(400).json({error: err.message});
+      response.status(400).json({ error: err.message });
     }
   },
-  async update( request, response) {
-    const {image, dateTile, dateTime} = request.body;
 
-    if(!image && !dateTile && !dateTime) {
-      return response.status(400).json({ error: "Você não informou nenhuma informação."})
+  async update(request, response) {
+    const { image, dateTile, dateTime } = request.body;
+
+    if (!image && !dateTile && !dateTime) {
+      return response.status(400).json({ error: "Você não informou nenhuma informação." })
     }
 
     if (image) response.ponto.image = image;
@@ -55,7 +65,7 @@ module.exports = {
 
     try {
       await response.ponto.save()
-      return response.status(200).json({ message: "Ponto alterado com sucesso "})
+      return response.status(200).json({ message: "Ponto alterado com sucesso " })
     } catch (err) {
       return response.status(500).json({ error: err.message })
     }
@@ -64,12 +74,13 @@ module.exports = {
   async delete(request, response) {
     try {
       await response.ponto.remove()
-      return response.status(200).json({ message: "Ponto excluido com sucesso"})
+      return response.status(200).json({ message: "Ponto excluido com sucesso" })
     } catch (err) {
       return response.status(500).json({ error: err.message });
     }
   },
 
-  
+
 };
 
+//Ver um jeito de fazer upload de da imagem 
