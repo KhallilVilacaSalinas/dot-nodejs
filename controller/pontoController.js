@@ -1,6 +1,8 @@
 const { v4: uuid } = require("uuid");
 const Ponto = require("../models/Ponto");
 const fs = require('fs');
+const path = require('path');
+const dirPath = path.join(__dirname, '..', 'uploads/');
 
 module.exports = {
   async index(request, response) {
@@ -29,18 +31,16 @@ module.exports = {
       return response.status(400).json({ error: "Missing image." });
     }
     console.log(image.substr(0, 20));
-
-    fs.writeFile("./uploads/" + idUser + "_" + dateTime + ".jpeg", Buffer.from(image, 'base64'),  (err) => {
+    console.log(dirPath);
+    fs.writeFile(dirPath + idUser + "_" + dateTime + ".jpeg", Buffer.from(image, 'base64'),  (err) => {
       if(err) console.log(err)});
-    // fs.writeFile(idUser + dateTime, buff,  (err) => {
-    //   if(err) console.log(err)});
 
     const video = new Ponto({
       _idComprovante: uuid(),
       idUser,
       dateTime,
       dateTile,
-      image: "/uploads/" + idUser+ "_" + dateTime + ".jpeg",
+      image: "/uploads/" + idUser + "_" + dateTime + ".jpeg",
     });
 
     try {
