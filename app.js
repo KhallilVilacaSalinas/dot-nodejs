@@ -2,21 +2,24 @@ require("dotenv").config();
 
 const express =  require('express');
 const app = express();
+const path = require('path');
 const morgan =  require('morgan');
-
 const connectToDatabase = require("./mongodb");
-const rotaProdutos = require('./routes/produtos');
-const rotaPontos = require('./routes/pontos');
+const rotaPontos = require('./src/routes/pontos');
 
-app.use(morgan('dev'))
-app.use('/uploads', express.static('uploads'))
+//ACCESS TO FOLDERS PUBLIC
+app.use('/public',express.static(path.join(__dirname, 'public')));
+
+app.use(morgan('dev'));
+
+//LIMIT SIZE FILE
 app.use(express.urlencoded({ limit: '50mb', extended: false}));
 app.use(express.json({limit: '50mb'}));
 
 //connect database mongodb
 connectToDatabase();
 
-app.use('/produtos', rotaProdutos);
+//ROUTES
 app.use('/pontos', rotaPontos);
 
 //CORS
@@ -34,7 +37,7 @@ app.use((req, res, next) =>{
   next();
 });
 
-// Quando não encontra rota, entra aqui:
+//BAD REQUEST
 app.use((req, res, next) => {
   const erro = new Error('Não encontrado');
   erro.status = 404;
@@ -52,5 +55,4 @@ app.use((error, req, res, next) => {
 
 module.exports = app;
 
-//04WWTO5LTDbB0V4P
 //mCev1xmRUzzNrSgn
