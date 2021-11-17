@@ -26,38 +26,40 @@ module.exports = {
 	},
 
 	async store(request, response) {
-		const { idUser, dateTile, dateTime } = request.body;
-		//console.log(request.file);
-		// if (!request.file) {
-		// 	return response.status(400).json({ error: "Missing image." });
+		console.log("funcionou");
+		return response.status(200).json({ log: 'funcionou' })
+		// const { idUser, dateTile, dateTime } = request.body;
+		// //console.log(request.file);
+		// // if (!request.file) {
+		// // 	return response.status(400).json({ error: "Missing image." });
+		// // }
+		// const filename = `${request.file.filename + Date.now()}.jpg`
+		// if (request.file) {
+		// 	await sharp(request.file.path)
+		// 		.toFormat('jpeg')
+		// 		.toFile(`./public/uploads/${filename}`);
+
+		// 	await fs.unlink(request.file.path);
+		// 	console.log(request.file.path);
+
+		// 	const video = new Ponto({
+		// 		_idComprovante: uuid(),
+		// 		idUser,
+		// 		dateTime,
+		// 		dateTile,
+		// 		image: `/public/uploads/${filename}`,
+		// 	});
+
+		// 	try {
+		// 		console.log(video);
+		// 		await video.save();
+		// 		return response.status(201).json({ message: "Ponto adicionado com sucesso!" });
+		// 	} catch (err) {
+		// 		response.status(400).json({ error: err.message });
+		// 	}
+		// } else {
+		// 	return response.status(400).json({ error: 'Arquivo inválido.' });
 		// }
-		const filename = `${request.file.filename + Date.now()}.jpg`
-		if (request.file) {
-			await sharp(request.file.path)
-				.toFormat('jpeg')
-				.toFile(`./public/uploads/${filename}`);
-
-			await fs.unlink(request.file.path);
-			console.log(request.file.path);
-
-			const video = new Ponto({
-				_idComprovante: uuid(),
-				idUser,
-				dateTime,
-				dateTile,
-				image: `/public/uploads/${filename}`,
-			});
-
-			try {
-				console.log(video);
-				await video.save();
-				return response.status(201).json({ message: "Ponto adicionado com sucesso!" });
-			} catch (err) {
-				response.status(400).json({ error: err.message });
-			}
-		} else {
-			return response.status(400).json({ error: 'Arquivo inválido.' });
-		}
 
 	},
 
