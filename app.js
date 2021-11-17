@@ -8,7 +8,7 @@ const connectToDatabase = require("./mongodb");
 const rotaPontos = require('./src/routes/pontos');
 
 //ACCESS TO FOLDERS PUBLIC
-app.use('/public',express.static(path.join(__dirname, 'public')));
+app.use('/public', express.static(path.join(__dirname, 'public')));
 
 app.use(morgan('dev'));
 
