@@ -6,10 +6,6 @@ const path = require('path');
 
 const fs = require("fs").promises;
 
-// const fs = require('fs');
-// const path = require('path');
-// const dirPath = path.join(__dirname, '..', 'uploads/');
-
 module.exports = {
 	async index(request, response) {
 		try {
