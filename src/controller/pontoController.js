@@ -26,34 +26,29 @@ module.exports = {
 	},
 
 	async store(request, response) {
-		console.log("funcionou");
 		const { idUser, dateTile, dateTime } = request.body;
-		const filename = `${request.file.filename + Date.now()}.jpg`;
-		if (request.file) {
-			await sharp(request.file.path)
-				.toFormat('jpeg')
-				.toFile(`./public/uploads/${filename}`);
+		const { location: url = "" } = request.file;
 
-			await fs.unlink(request.file.path);
-			console.log(request.file.path);
-
-			const video = new Ponto({
+			const ponto = new Ponto({
 				_idComprovante: uuid(),
 				idUser,
 				dateTime,
 				dateTile,
-				image: `/public/uploads/${filename}`,
+				image: url,
 			});
 
 			try {
-				await video.save();
-				return response.status(201).json({ message: "Ponto adicionado com sucesso!" });
+				await ponto.save();
+				return response.status(201).json({ 
+					message: "Ponto adicionado com sucesso!",
+					data: ponto
+			 	});
 			} catch (err) {
 				response.status(400).json({ error: err.message });
 			}
-		} else {
-			return response.status(400).json({ error: 'Arquivo inválido.' });
-		}
+		// } else {
+		// 	return response.status(400).json({ error: 'Arquivo inválido.' });
+		// }
 
 	},
 
@@ -78,7 +73,6 @@ module.exports = {
 
 	async delete(request, response) {
 		try {
-			await fs.unlink(path.join(__dirname, '..', '..', response.ponto.image ));
 			await response.ponto.remove()
 			return response.status(200).json({ message: "Ponto excluido com sucesso" })
 		} catch (err) {

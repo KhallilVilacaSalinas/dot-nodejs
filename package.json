@@ -10,6 +10,7 @@
   "author": "Khallil Vilaça Salinas",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.1031.0",
     "body-parser": "^1.19.0",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
@@ -17,6 +18,7 @@
     "mongoose": "^6.0.6",
     "morgan": "^1.10.0",
     "multer": "^1.4.3",
+    "multer-s3": "^2.10.0",
     "mysql": "^2.18.1",
     "sharp": "^0.29.3",
     "uuid": "^8.3.2"
