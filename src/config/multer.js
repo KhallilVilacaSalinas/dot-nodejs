@@ -1,4 +1,5 @@
-const path = require("path");
+
+require('dotenv').config();
 const aws = require("aws-sdk");
 const multerS3 = require("multer-s3");
 const crypto = require("crypto");
