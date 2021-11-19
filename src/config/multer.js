@@ -1,5 +1,5 @@
 
-const AWS = require("AWS-sdk");
+const AWS = require("aws-sdk");
 const multerS3 = require("multer-s3");
 const crypto = require("crypto");
 
