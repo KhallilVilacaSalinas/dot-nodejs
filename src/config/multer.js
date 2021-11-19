@@ -3,13 +3,6 @@ const AWS = require("AWS-sdk");
 const multerS3 = require("multer-s3");
 const crypto = require("crypto");
 
-AWS.config.update({
-  region: 'us-east-1',
-  apiVersion: 'latest',
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  accessSecretKey: process.env.AWS_SECRET_ACCESS_KEY,
-});
-
 console.log(process.env.AWS_ACCESS_KEY_ID)
 const storageTypes = multerS3({
   s3: new AWS.S3(),
