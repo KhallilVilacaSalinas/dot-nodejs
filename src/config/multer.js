@@ -28,8 +28,8 @@ module.exports = {
   },
   fileFilter: (req, file, cb) => {
     const allowedMimes = [
+      "image/jpg",
       "image/jpeg",
-      "image/pjpeg",
       "image/png",
     ];
 
