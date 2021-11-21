@@ -28,16 +28,13 @@ module.exports = {
   },
   fileFilter: (req, file, cb) => {
     const allowedMimes = [
-      "image/jpg",
-      "image/jpeg",
-      "image/png",
+      "image/*",
     ];
 
-    if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
+    if (allowedMimes.includes(file.mimetype)) {
       cb(null, true);
     } else {
-      cb(null, false);
-      return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
+      cb(new Error("Invalid file type."));
     }
   }
 };
