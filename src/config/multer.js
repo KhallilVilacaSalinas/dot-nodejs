@@ -33,10 +33,11 @@ module.exports = {
       "image/png",
     ];
 
-    if (allowedMimes.includes(file.mimetype)) {
+    if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
       cb(null, true);
     } else {
-      cb(new Error("Invalid file type."));
+      cb(null, false);
+      return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
     }
   }
 };
