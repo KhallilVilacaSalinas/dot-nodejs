@@ -13,7 +13,6 @@ const pontoSchema = new mongoose.Schema({
   },
   dateTime: {
     type: String,
-    required: true,
   },
   dateTile: {
     type: String,
